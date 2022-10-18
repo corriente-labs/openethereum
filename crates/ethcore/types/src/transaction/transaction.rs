@@ -26,6 +26,7 @@ use parity_util_mem::MallocSizeOf;
 
 use rlp::{self, DecoderError, Rlp, RlpStream};
 use std::{cmp::min, ops::Deref};
+use parity_crypto::publickey::Message;
 
 pub type AccessListItem = (H160, Vec<H256>);
 pub type AccessList = Vec<AccessListItem>;
@@ -519,12 +520,12 @@ impl TypedTransaction {
     }
 
     /// The message hash of the transaction.
-    pub fn signature_hash(&self, chain_id: Option<u64>) -> H256 {
+    pub fn signature_hash(&self, chain_id: Option<u64>) -> Message {
         keccak(match self {
             Self::Legacy(tx) => tx.encode(chain_id, None),
             Self::AccessList(tx) => tx.encode(chain_id, None),
             Self::EIP1559Transaction(tx) => tx.encode(chain_id, None),
-        })
+        }) as Message
     }
 
     /// Signs the transaction as coming from `sender`.
