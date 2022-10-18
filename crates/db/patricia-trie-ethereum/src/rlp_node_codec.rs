@@ -87,7 +87,7 @@ impl NodeCodec<KeccakHasher> for RlpNodeCodec<KeccakHasher> {
             Some(r.as_val().expect("Hash is the correct size; qed"))
         } else {
             None
-            
+// remove me
         }
     }
     fn is_empty_node(data: &[u8]) -> bool {
