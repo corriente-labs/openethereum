@@ -530,7 +530,7 @@ impl TypedTransaction {
 
     /// Signs the transaction as coming from `sender`.
     pub fn sign(self, secret: &Secret, chain_id: Option<u64>) -> SignedTransaction {
-        let sig = publickey::sign(secret, &self.signature_hash(chain_id))
+        let sig = publickey::sign(secret, &self.signature_hash(chain_id) as & Message)
             .expect("data is valid and context has signing capabilities; qed");
         SignedTransaction::new(self.with_signature(sig, chain_id))
             .expect("secret is valid so it's recoverable")
