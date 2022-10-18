@@ -85,7 +85,7 @@ impl NodeCodec<KeccakHasher> for RlpNodeCodec<KeccakHasher> {
     fn try_decode_hash(data: &[u8]) -> Option<<KeccakHasher as Hasher>::Out> {
         let r = Rlp::new(data);
         if r.is_data() && r.size() == KeccakHasher::LENGTH {
-            Some(<KeccakHasher as Hasher>::Out::from(r.as_val().expect("Hash is the correct size; qed")))
+            Some(r.as_val::<<KeccakHasher as Hasher>::Out>().expect("Hash is the correct size; qed"))
         } else {
             None
         }
