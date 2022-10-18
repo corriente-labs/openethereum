@@ -27,7 +27,7 @@ ethcore-db = { path = "../db/db" }
 ethcore-io = { path = "../runtime/io" }
 ethcore-miner = { path = "../concensus/miner" }
 ethcore-stratum = { path = "../concensus/miner/stratum", optional = true }
-ethereum-types = "0.9.2"
+ethereum-types = "0.12.1"
 ethjson = { path = "../ethjson" }
 ethkey = { path = "../accounts/ethkey" }
 evm = { path = "../vm/evm" }
