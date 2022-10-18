@@ -521,11 +521,11 @@ impl TypedTransaction {
 
     /// The message hash of the transaction.
     pub fn signature_hash(&self, chain_id: Option<u64>) -> Message {
-        keccak(match self {
+        Message::from(keccak(match self {
             Self::Legacy(tx) => tx.encode(chain_id, None),
             Self::AccessList(tx) => tx.encode(chain_id, None),
             Self::EIP1559Transaction(tx) => tx.encode(chain_id, None),
-        }) as Message
+        }))
     }
 
     /// Signs the transaction as coming from `sender`.
