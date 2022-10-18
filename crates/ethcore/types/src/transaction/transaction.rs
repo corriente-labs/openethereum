@@ -955,7 +955,7 @@ impl SignedTransaction {
             return Err(publickey::Error::InvalidSignature);
         }
         let public = transaction.recover_public()?;
-        let sender = public_to_address(&public);
+        let sender = Address::from(public_to_address(&public));
         Ok(SignedTransaction {
             transaction,
             sender,
