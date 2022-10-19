@@ -15,7 +15,7 @@
 // along with OpenEthereum.  If not, see <http://www.gnu.org/licenses/>.
 
 //! `NodeCodec` implementation for Rlp
-
+use contract_address;
 use elastic_array::ElasticArray128;
 use ethereum_types::H256;
 use hash_db::Hasher;
@@ -84,7 +84,8 @@ impl NodeCodec<KeccakHasher> for RlpNodeCodec<KeccakHasher> {
     fn try_decode_hash(data: &[u8]) -> Option<<KeccakHasher as Hasher>::Out> {
         let r = Rlp::new(data);
         if r.is_data() && r.size() == KeccakHasher::LENGTH {
-            Some(r.as_val().expect("Hash is the correct size; qed"))
+            let h256 = contract_address::H256::decode(&r);
+            Some(<KeccakHasher as Hasher>::Out::from(h256));
         } else {
             None
         }
